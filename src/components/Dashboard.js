@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import { Alert, Button, Card } from "react-bootstrap";
+
+import { Button, Card, CardContent } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 import { useAuth } from "../contexts/AuthContext";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+
 function Dashboard() {
   const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
@@ -18,17 +21,28 @@ function Dashboard() {
   return (
     <>
       <Card>
-        <Card.Body>
+        <CardContent>
           <h2 className="text-center mb-4">Profile</h2>
-          {error && <Alert variant="danger">{error}</Alert>}
+          {error && <Alert severity="error">{error}</Alert>}
           <strong>Email:</strong> {currentUser.email}
-          <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
+          <Button
+            className="w-100 mt-2"
+            href="/update-profile"
+            color="primary"
+            disableElevation
+          >
             Update Profile
-          </Link>
-        </Card.Body>
+          </Button>
+        </CardContent>
       </Card>
       <div className="w-100 text-center mt-2">
-        <Button variant="link" onClick={handleLogout}>
+        <Button
+          variant="contained"
+          color="primary"
+          className="w-100"
+          type="submit"
+          onClick={handleLogout}
+        >
           Log Out
         </Button>
       </div>

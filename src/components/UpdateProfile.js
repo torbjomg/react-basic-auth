@@ -1,5 +1,13 @@
 import React, { useRef, useState } from "react";
-import { Form, Button, Card, Alert } from "react-bootstrap";
+
+import {
+  Button,
+  Card,
+  CardContent,
+  FormControl,
+  TextField,
+} from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 function UpdateProfile() {
@@ -40,43 +48,48 @@ function UpdateProfile() {
   return (
     <>
       <Card>
-        <Card.Body>
+        <CardContent>
           <h2 className="text-center mb-4">Update Profile</h2>
-          {error && <Alert variant="danger">{error}</Alert>}
-          <Form onSubmit={handleSubmit} autoComplete={false}>
-            <Form.Group id="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
+          {error && <Alert severity="error">{error}</Alert>}
+          <form onSubmit={handleSubmit} autoComplete={false}>
+            <FormControl className="w-100 mb-4" id="email">
+              <TextField
                 type="email"
-                ref={emailRef}
+                inputRef={emailRef}
                 required
-                defaultValue={currentUser.email}
+                label="Email"
               />
-            </Form.Group>
-            <Form.Group id="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
+            </FormControl>
+            <FormControl className="w-100 mb-4" id="password">
+              <TextField
                 type="password"
-                ref={passwordRef}
-                placeholder="Leave blank to keep the same"
+                inputRef={passwordRef}
+                required
+                label="Password"
               />
-            </Form.Group>
-            <Form.Group id="password-confirm">
-              <Form.Label>Password Confirmation</Form.Label>
-              <Form.Control
+            </FormControl>
+            <FormControl className="w-100 mb-4" id="password">
+              <TextField
                 type="password"
-                ref={passwordConfirmRef}
-                placeholder="Leave blank to keep the same"
+                inputRef={passwordConfirmRef}
+                required
+                label="Password Confirmation"
               />
-            </Form.Group>
-            <Button disabled={loading} className="w-100" type="submit">
+            </FormControl>
+            <Button
+              variant="contained"
+              color="primary"
+              disabled={loading}
+              className="w-100"
+              type="submit"
+            >
               Update
             </Button>
-          </Form>
+          </form>
           <div className="w-100 text-center mt-3">
             <Link to="/">Cancel</Link>
           </div>
-        </Card.Body>
+        </CardContent>
       </Card>
     </>
   );
