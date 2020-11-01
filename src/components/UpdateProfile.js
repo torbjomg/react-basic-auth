@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-
 import {
   Button,
   Card,
@@ -7,10 +6,27 @@ import {
   FormControl,
   TextField,
 } from "@material-ui/core";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 import { Alert } from "@material-ui/lab";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
+
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    formControl: {
+      width: "100%",
+    },
+    link: {
+      width: "100%",
+      textAlign: "left",
+      paddingTop: theme.spacing(0.5),
+    },
+  })
+);
+
 function UpdateProfile() {
+  const classes = useStyles();
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
@@ -49,10 +65,10 @@ function UpdateProfile() {
     <>
       <Card>
         <CardContent>
-          <h2 className="text-center mb-4">Update Profile</h2>
+          <Typography variant="h4">Update Profile</Typography>
           {error && <Alert severity="error">{error}</Alert>}
           <form onSubmit={handleSubmit} autoComplete={false}>
-            <FormControl className="w-100 mb-4" id="email">
+            <FormControl className={classes.formControl} id="email">
               <TextField
                 type="email"
                 inputRef={emailRef}
@@ -60,7 +76,7 @@ function UpdateProfile() {
                 label="Email"
               />
             </FormControl>
-            <FormControl className="w-100 mb-4" id="password">
+            <FormControl className={classes.formControl} id="password">
               <TextField
                 type="password"
                 inputRef={passwordRef}
@@ -68,7 +84,7 @@ function UpdateProfile() {
                 label="Password"
               />
             </FormControl>
-            <FormControl className="w-100 mb-4" id="password">
+            <FormControl className={classes.formControl} id="password">
               <TextField
                 type="password"
                 inputRef={passwordConfirmRef}
@@ -76,17 +92,18 @@ function UpdateProfile() {
                 label="Password Confirmation"
               />
             </FormControl>
-            <Button
-              variant="contained"
-              color="primary"
-              disabled={loading}
-              className="w-100"
-              type="submit"
-            >
-              Update
-            </Button>
+            <FormControl className={classes.formControl} id="submit">
+              <Button
+                variant="contained"
+                color="primary"
+                disabled={loading}
+                type="submit"
+              >
+                Update
+              </Button>
+            </FormControl>
           </form>
-          <div className="w-100 text-center mt-3">
+          <div className={classes.link}>
             <Link to="/">Cancel</Link>
           </div>
         </CardContent>

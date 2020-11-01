@@ -3,14 +3,30 @@ import {
   FormControl,
   Button,
   Card,
-  InputLabel,
+  CardContent,
   TextField,
 } from "@material-ui/core";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 import Alert from "@material-ui/lab/Alert";
 import { useAuth } from "../contexts/AuthContext";
 import { Link } from "react-router-dom";
 
+const useStyles = makeStyles((theme) =>
+  createStyles({
+    formControl: {
+      width: "100%",
+    },
+    link: {
+      width: "100%",
+      textAlign: "left",
+      paddingTop: theme.spacing(0.5),
+    },
+  })
+);
+
 function Signup() {
+  const classes = useStyles();
   const emailRef = useRef();
   const { resetPassword } = useAuth();
   const [error, setError] = useState("");
@@ -32,26 +48,44 @@ function Signup() {
   return (
     <>
       <Card>
-        <Card.Body>
-          <h2 className="text-center mb-4">Password Reset</h2>
+        <CardContent>
+          <Typography variant="h4">Password Reset</Typography>
           {error && <Alert variant="danger">{error}</Alert>}
           {message && <Alert variant="success">{message}</Alert>}
           <form onSubmit={handleSubmit} autoComplete={false}>
-            <FormControl>
-              <InputLabel id="email">Email</InputLabel>
-              <TextField type="email" ref={emailRef} required />
+            <FormControl
+              className={classes.formControl}
+              id="email"
+              margin="normal"
+            >
+              <TextField
+                type="email"
+                inputRef={emailRef}
+                required
+                label="Email"
+              />
             </FormControl>
-
-            <Button disabled={loading} className="w-100" type="submit">
-              Reset Password
-            </Button>
+            <FormControl
+              className={classes.formControl}
+              id="submit"
+              margin="normal"
+            >
+              <Button
+                variant="contained"
+                color="primary"
+                disabled={loading}
+                type="submit"
+              >
+                Reset Password
+              </Button>
+            </FormControl>
           </form>
-          <div className="w-100 text-center mt-3">
+          <div className={classes.link}>
             <Link to="/login">Log in</Link>
           </div>
-        </Card.Body>
+        </CardContent>
       </Card>
-      <div className="w-100 text-center mt-2">
+      <div className={classes.link}>
         Need an account? <Link to="/signup">Sign up</Link>
       </div>
     </>
